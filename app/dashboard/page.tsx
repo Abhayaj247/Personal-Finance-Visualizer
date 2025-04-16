@@ -64,8 +64,8 @@ export default function Dashboard() {
             if (!response.ok) throw new Error("Failed to fetch transactions");
             const data: Transaction[] = await response.json();  // Specific type
             setTransactions(data);
-        } catch (err: any) {  // Keep any for error
-            setError(err.message || "Unknown error");
+        } catch (err: unknown) {
+            setError((err as Error).message || "Unknown error");
         }
     }, []);
 
@@ -75,7 +75,7 @@ export default function Dashboard() {
             if (!response.ok) throw new Error("Failed to fetch categories");
             const data: Category[] = await response.json();  // Specific type
             setCategories(data);
-        } catch (err: any) {  // Keep any for error
+        } catch (err: unknown) {  // Keep any for error
             console.error("Failed to fetch categories:", err);
         }
     }, []);
@@ -86,7 +86,7 @@ export default function Dashboard() {
             if (!response.ok) throw new Error("Failed to fetch budgets");
             const data: Budget[] = await response.json();  // Specific type
             setBudgets(data);
-        } catch (err: any) {  // Keep any for error
+        } catch (err: unknown) {  // Keep unknown for error
             console.error("Failed to fetch budgets:", err);
         }
     }, [month]);
@@ -186,7 +186,7 @@ export default function Dashboard() {
             });
             if (!res.ok) throw new Error("Failed to save budget");
 
-        } catch (error: any) {  // Keep any for error
+        } catch (error: unknown) {  // Keep unknown for error
             console.error(error);
         }
     };
