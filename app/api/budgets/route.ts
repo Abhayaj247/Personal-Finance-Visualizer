@@ -9,7 +9,7 @@ export async function GET(request: Request) {
     const month = url.searchParams.get("month");
     const budgets = await Budget.find(month ? { month } : {}).populate("category");
     return NextResponse.json(budgets);
-  } catch (error) {
+  } catch (_) {
     return NextResponse.json({ error: "Failed to fetch budgets" }, { status: 500 });
   }
 }
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     );
 
     return NextResponse.json(budget);
-  } catch (error) {
+  } catch (_) {
     return NextResponse.json({ error: "Failed to save budget" }, { status: 500 });
   }
 }
