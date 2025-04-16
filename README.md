@@ -45,7 +45,7 @@ A simple web application for tracking personal finances and visualizing spending
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/personal-finance-visualizer.git
+git clone https://github.com/Abhayaj247/Personal-Finance-Visualizer.git
 cd personal-finance-visualizer
 ```
 
