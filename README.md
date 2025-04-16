@@ -73,7 +73,7 @@ yarn dev
 
 ## Deployment
 
-This application is deployed on Vercel. The live version can be accessed at [https://personal-finance-visualizer-abhay-joshi.vercel.app/](https://personal-finance-visualizer-abhay-joshi.vercel.app/)
+This application is deployed on Vercel. The live version can be accessed at [https://personal-finance-visualizer-nine-liart.vercel.app/](https://personal-finance-visualizer-nine-liart.vercel.app/)
 
 ### How to deploy your own instance:
 
