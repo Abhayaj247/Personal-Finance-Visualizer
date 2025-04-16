@@ -1,14 +1,14 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/db';
 import Transaction from '@/models/Transaction';
 
 export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: { id: string } }
 ) {
   try {
     await connectToDatabase();
-    const transaction = await Transaction.findById(params.id).populate('category');
+    const transaction = await Transaction.findById(context.params.id).populate('category');
     if (!transaction) {
       return NextResponse.json({ error: 'Transaction not found' }, { status: 404 });
     }
@@ -19,15 +19,15 @@ export async function GET(
 }
 
 export async function PUT(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: { id: string } }
 ) {
   try {
     const body = await request.json();
     await connectToDatabase();
 
     const transaction = await Transaction.findByIdAndUpdate(
-      params.id,
+      context.params.id,
       {
         amount: body.amount,
         date: new Date(body.date),
@@ -48,12 +48,12 @@ export async function PUT(
 }
 
 export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: { id: string } }
 ) {
   try {
     await connectToDatabase();
-    const transaction = await Transaction.findByIdAndDelete(params.id);
+    const transaction = await Transaction.findByIdAndDelete(context.params.id);
     if (!transaction) {
       return NextResponse.json({ error: 'Transaction not found' }, { status: 404 });
     }
