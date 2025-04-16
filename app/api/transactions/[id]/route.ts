@@ -2,13 +2,10 @@ import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/db';
 import Transaction from '@/models/Transaction';
 
-interface Params {
-  params: {
-    id: string;
-  };
-}
-
-export async function GET(request: Request, { params }: Params) {
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     await connectToDatabase();
     const transaction = await Transaction.findById(params.id).populate('category');
@@ -21,7 +18,10 @@ export async function GET(request: Request, { params }: Params) {
   }
 }
 
-export async function PUT(request: Request, { params }: Params) {
+export async function PUT(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     const body = await request.json();
     await connectToDatabase();
@@ -47,7 +47,10 @@ export async function PUT(request: Request, { params }: Params) {
   }
 }
 
-export async function DELETE(request: Request, { params }: Params) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     await connectToDatabase();
     const transaction = await Transaction.findByIdAndDelete(params.id);
