@@ -2,13 +2,19 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/db';
 import Transaction from '@/models/Transaction';
 
-export async function GET(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+function extractIdFromRequest(req: NextRequest): string | null {
+  const url = new URL(req.url);
+  const segments = url.pathname.split('/');
+  return segments[segments.length - 1] || null;
+}
+
+export async function GET(req: NextRequest) {
+  const id = extractIdFromRequest(req);
+  if (!id) return NextResponse.json({ error: 'Invalid transaction ID' }, { status: 400 });
+
   try {
     await connectToDatabase();
-    const transaction = await Transaction.findById(context.params.id).populate('category');
+    const transaction = await Transaction.findById(id).populate('category');
     if (!transaction) {
       return NextResponse.json({ error: 'Transaction not found' }, { status: 404 });
     }
@@ -18,16 +24,16 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+export async function PUT(req: NextRequest) {
+  const id = extractIdFromRequest(req);
+  if (!id) return NextResponse.json({ error: 'Invalid transaction ID' }, { status: 400 });
+
   try {
-    const body = await request.json();
+    const body = await req.json();
     await connectToDatabase();
 
     const transaction = await Transaction.findByIdAndUpdate(
-      context.params.id,
+      id,
       {
         amount: body.amount,
         date: new Date(body.date),
@@ -47,13 +53,13 @@ export async function PUT(
   }
 }
 
-export async function DELETE(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+export async function DELETE(req: NextRequest) {
+  const id = extractIdFromRequest(req);
+  if (!id) return NextResponse.json({ error: 'Invalid transaction ID' }, { status: 400 });
+
   try {
     await connectToDatabase();
-    const transaction = await Transaction.findByIdAndDelete(context.params.id);
+    const transaction = await Transaction.findByIdAndDelete(id);
     if (!transaction) {
       return NextResponse.json({ error: 'Transaction not found' }, { status: 404 });
     }
