@@ -40,7 +40,7 @@ export default function BudgetForm({ month, onSuccess, onBudgetSave }: BudgetFor
                     const data = await response.json();
                     setCategories(data);
                 }
-            } catch (err: any) {  // Keep any for error
+            } catch (err: unknown) {  // Keep any for error
                 console.error("Failed to fetch categories", err);
             }
         }
@@ -69,9 +69,9 @@ export default function BudgetForm({ month, onSuccess, onBudgetSave }: BudgetFor
             }
 
 
-        } catch (err: any) {  // Keep any for error
+        } catch (err: unknown) {  // Keep any for error
             toast.error("Error saving budget", {
-                description: err.message || "Something went wrong",
+                description: (err as Error).message || "Something went wrong",
             });
         } finally {
             setIsLoading(false);
