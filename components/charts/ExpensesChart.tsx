@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { format, parseISO, startOfMonth, endOfMonth, eachMonthOfInterval, subMonths } from 'date-fns';
+import { format, startOfMonth, endOfMonth, eachMonthOfInterval, subMonths } from 'date-fns';
 import {
   BarChart,
   Bar,

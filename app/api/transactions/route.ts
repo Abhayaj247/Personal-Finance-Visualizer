@@ -7,7 +7,7 @@ export async function GET() {
     await connectToDatabase();
     const transactions = await Transaction.find({}).populate('category').sort({ date: -1 });
     return NextResponse.json(transactions);
-  } catch (_) {
+  } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch transactions' }, { status: 500 });
   }
 }
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     await transaction.save();
     await transaction.populate('category');
     return NextResponse.json(transaction, { status: 201 });
-  } catch (_) {
+  } catch (error) {
     return NextResponse.json({ error: 'Failed to create transaction' }, { status: 500 });
   }
 }

@@ -62,9 +62,9 @@ export default function Dashboard() {
         try {
             const response = await fetch("/api/transactions");
             if (!response.ok) throw new Error("Failed to fetch transactions");
-            const data = await response.json();
+            const data: Transaction[] = await response.json();  // Specific type
             setTransactions(data);
-        } catch (err: any) {
+        } catch (err: any) {  // Keep any for error
             setError(err.message || "Unknown error");
         }
     }, []);
@@ -73,9 +73,9 @@ export default function Dashboard() {
         try {
             const response = await fetch("/api/categories");
             if (!response.ok) throw new Error("Failed to fetch categories");
-            const data = await response.json();
+            const data: Category[] = await response.json();  // Specific type
             setCategories(data);
-        } catch (err: any) {
+        } catch (err: any) {  // Keep any for error
             console.error("Failed to fetch categories:", err);
         }
     }, []);
@@ -84,9 +84,9 @@ export default function Dashboard() {
         try {
             const response = await fetch(`/api/budgets?month=${month}`);
             if (!response.ok) throw new Error("Failed to fetch budgets");
-            const data = await response.json();
+            const data: Budget[] = await response.json();  // Specific type
             setBudgets(data);
-        } catch (err: any) {
+        } catch (err: any) {  // Keep any for error
             console.error("Failed to fetch budgets:", err);
         }
     }, [month]);
@@ -186,8 +186,8 @@ export default function Dashboard() {
             });
             if (!res.ok) throw new Error("Failed to save budget");
 
-        } catch (err: any) {
-            console.error(err);
+        } catch (error: any) {  // Keep any for error
+            console.error(error);
         }
     };
 
